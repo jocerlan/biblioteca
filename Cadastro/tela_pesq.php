@@ -10,7 +10,7 @@
     <div>
         <a href=".\tela_pesq.php">Pesquisar</a>
         <a href=".\listar.php">Listar</a>
-        <a href=".\cadastro.html">Cadastrar</a>
+        <a href=".\index.html">Cadastrar</a>
     </div>
     <form action="pesquisar.php" method="POST">
         <table>
@@ -26,4 +26,5 @@
         </table>
     </form>
 </body>
+
 </html>
