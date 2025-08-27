@@ -1,0 +1,32 @@
+body{
+    background-color: #d2d2d2;
+   
+}
+
+ul{
+    background-color: #58aeb869;
+    color: #020305;
+    width: 300px;
+    height: 300px;
+    margin: 20px;
+    border-radius: 15px;
+    align-content: center;
+}
+li{
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    list-style-type: none;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.conteiner{
+    color:#ec225e;
+    font-size: 20px;
+}
+a{
+    text-decoration: none;
+    color:#c39898;
+}
+a:hover{
+    color:#ec225e;
+}
