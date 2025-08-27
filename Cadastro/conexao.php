@@ -23,8 +23,9 @@ if (!$con) {
     <div>
         <a class="conexao" href=".\tela_pesq.php">Pesquisar</a>
         <a class="conexao" href=".\listar.php">Listar</a>
-        <a class="conexao" href=".\cadastro.html">Cadastrar</a>
+        <a class="conexao" href=".\index.html">Cadastrar</a>
     </div>
 </body>
 </html>
+
 
