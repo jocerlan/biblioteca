@@ -29,7 +29,7 @@ jobs:
             sudo su
             cd /home/admin || exit
             if [ ! -d meu-site ]; then
-              git clone https://github.com/jocerlan/biblioteca.git meu-site
+              git clone https://github.com/jocerlan/biblioteca.git meu-site-samara
             fi
             cd meu-site
             git reset --hard
