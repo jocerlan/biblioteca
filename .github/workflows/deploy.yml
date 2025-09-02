@@ -37,5 +37,5 @@ jobs:
             sudo docker stop site-estatico-samara || true
             sudo docker rm site-estatico-samara || true
             sudo docker build -t site-estatico-samara .
-            sudo docker run -d -p 8080:8080 --name site-estatico-samara site-estatico-samara
+            sudo docker run -d -p 8080:80 --name site-estatico-samara site-estatico-samara
           "
