@@ -4,27 +4,13 @@ $usuario="root";
 $senha="25106566@#Ja";
 $banco="biblioteca";
 
-$con= mysqli_connect($servidor,$usuario,$senha,$banco);
+$con = mysqli_connect($servidor, $usuario, $senha, $banco);
 
 if (!$con) {
-    echo "Falha na conexão!";
-}else{
-    // echo "Conexão realizada com sucesso!";
+    die("Falha na conexão com o banco de dados: " . mysqli_connect_error());
 }
+
+// Definir charset para UTF-8
+mysqli_set_charset($con, "utf8");
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista</title>
-    <link rel="stylesheet" href=".\estilos\estilo1.css">
-</head>
-<body>
-    <div>
-        <a class="conexao" href=".\tela_pesq.php">Pesquisar</a>
-        <a class="conexao" href=".\listar.php">Listar</a>
-        <a class="conexao" href=".\index.html">Cadastrar</a>
-    </div>
-</body>
-</html>
 

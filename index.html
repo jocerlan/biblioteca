@@ -1,33 +1,154 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastro</title>
-    <link rel="stylesheet" href=".\estilos\estilo.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Digital - Cadastrar Livro</title>
+    <link rel="stylesheet" href=".\estilos\main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div>
-        <a href=".\tela_pesq.php">Pesquisar</a>
-        <a href=".\listar.php">Listar</a>
+    <div class="main-layout">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <nav class="nav">
+                    <a href=".\index.html" class="logo">Biblioteca Digital</a>
+                    <ul class="nav-links">
+                        <li><a href=".\index.html" class="nav-link active">Cadastrar</a></li>
+                        <li><a href=".\listar.php" class="nav-link">Listar Livros</a></li>
+                        <li><a href=".\tela_pesq.php" class="nav-link">Pesquisar</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <div id="alert-container"></div>
+                
+                <div class="card fade-in">
+                    <div class="card-header text-center">
+                        <h1 class="card-title">📖 Cadastrar Novo Livro</h1>
+                        <p class="card-subtitle">Adicione um livro à sua biblioteca pessoal com uma resenha</p>
+                    </div>
+
+                    <form action="cadastrar.php" method="POST" class="form">
+                        <div class="form-group">
+                            <label for="nome" class="form-label">Título do Livro</label>
+                            <input 
+                                type="text" 
+                                id="nome"
+                                name="nome" 
+                                class="form-input" 
+                                placeholder="Digite o título do livro"
+                                required
+                                autocomplete="off"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="autor" class="form-label">Autor</label>
+                            <input 
+                                type="text" 
+                                id="autor"
+                                name="autor" 
+                                class="form-input" 
+                                placeholder="Digite o nome do autor"
+                                required
+                                autocomplete="off"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="resenha" class="form-label">Sua Resenha</label>
+                            <textarea 
+                                id="resenha"
+                                name="resenha" 
+                                class="form-textarea" 
+                                placeholder="Compartilhe seus pensamentos sobre o livro..."
+                                rows="6"
+                                required
+                            ></textarea>
+                        </div>
+
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary">
+                                <span>💾</span>
+                                Salvar Livro
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container text-center">
+                <p class="text-muted">© 2024 Biblioteca Digital - Organize seus livros favoritos</p>
+            </div>
+        </footer>
     </div>
-    <form action="cadastrar.php" method="POST">
-        <table>
-            <tr>
-                <th>Cadastre o Livro Lido</th>
-            </tr>
-            <tr>
-                <td><input class="in" type="text" name="nome" placeholder="Digite o nome do Livro"></td>
-            </tr>
-            <tr>
-                <td><input class="in" type="text" name="autor" placeholder="Digite o nome do Autor"></td>
-            </tr>
-            <tr>
-                <td><textarea class="in" type="text" name="resenha" placeholder="Digite sua Resenha"></textarea></td>
-            </tr>
-            <tr>
-                <td><input class="in" type="submit" value="Salvar"></td>
-            </tr>
-        </table>
-    </form>
+
+    <script>
+        // Verificar parâmetros da URL para mostrar notificações
+        const urlParams = new URLSearchParams(window.location.search);
+        const alertContainer = document.getElementById('alert-container');
+        
+        if (urlParams.get('erro')) {
+            let errorMessage = '';
+            switch(urlParams.get('erro')) {
+                case '1': errorMessage = 'Erro ao salvar o livro. Tente novamente.'; break;
+                case '2': errorMessage = 'Por favor, preencha todos os campos.'; break;
+                case '3': errorMessage = 'Dados inválidos enviados.'; break;
+                default: errorMessage = 'Ocorreu um erro inesperado.'; break;
+            }
+            
+            const alert = document.createElement('div');
+            alert.className = 'alert alert-danger fade-in';
+            alert.innerHTML = `<span>❌</span> ${errorMessage}`;
+            alertContainer.appendChild(alert);
+            
+            // Remover o parâmetro da URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+
+        // Adicionar animação de loading no submit
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const submitBtn = document.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<span class="spinner"></span> Salvando...';
+            submitBtn.disabled = true;
+        });
+
+        // Validação em tempo real
+        const inputs = document.querySelectorAll('.form-input, .form-textarea');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.value.trim() === '') {
+                    this.style.borderColor = 'var(--danger-color)';
+                } else {
+                    this.style.borderColor = 'var(--success-color)';
+                }
+            });
+
+            input.addEventListener('focus', function() {
+                this.style.borderColor = 'var(--primary-color)';
+            });
+        });
+
+        // Auto-remover alertas após 5 segundos
+        setTimeout(() => {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                alert.style.opacity = '0';
+                alert.style.transform = 'translateY(-20px)';
+                setTimeout(() => alert.remove(), 300);
+            });
+        }, 5000);
+    </script>
 </body>
 </html>
