@@ -28,7 +28,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no admin@${{ secrets.EC2_HOST }} "
             sudo su
             cd /home/admin || exit
-            if [ ! -d meu-site ]; then
+            if [ ! -d meu-site-samara ]; then
               git clone https://github.com/jocerlan/biblioteca.git meu-site-samara
             fi
             cd meu-site
