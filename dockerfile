@@ -14,6 +14,6 @@ RUN a2enmod rewrite
 RUN chown -R www-data:www-data /var/www/html
 
 # Expõe a porta 80
-EXPOSE 8080
+EXPOSE 80
 
 # Apache já é o processo principal, então não precisa de CMD extra
