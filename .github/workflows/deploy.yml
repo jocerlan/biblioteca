@@ -1,0 +1,41 @@
+name: Deploy to EC2 Debian
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Configurar chave SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Testar conexão SSH
+        run: ssh -o StrictHostKeyChecking=no admin@${{ secrets.EC2_HOST }} "echo ✅ Conexão OK!"
+
+      - name: Deploy no servidor
+        run: |
+          ssh -o StrictHostKeyChecking=no admin@${{ secrets.EC2_HOST }} "
+            sudo su
+            cd /home/admin || exit
+            if [ ! -d meu-site ]; then
+              git clone https://github.com/jocerlan/portifolio.git meu-site
+            fi
+            cd meu-site
+            git reset --hard
+            git pull origin main
+            sudo docker stop site-estatico || true
+            sudo docker rm site-estatico || true
+            sudo docker build -t site-estatico .
+            sudo docker run -d -p 80:80 --name site-estatico site-estatico
+          "
