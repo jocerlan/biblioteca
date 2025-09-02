@@ -31,7 +31,7 @@ jobs:
             if [ ! -d meu-site-samara ]; then
               git clone https://github.com/jocerlan/biblioteca.git meu-site-samara
             fi
-            cd meu-site
+            cd meu-site-samara
             git reset --hard
             git pull origin main
             sudo docker stop site-estatico-samara || true
