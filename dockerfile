@@ -30,7 +30,7 @@ command=/usr/sbin/nginx -g "daemon off;"
 EOF
 
 # Expõe a porta 80
-EXPOSE 80
+EXPOSE 8080
 
 # Comando de inicialização
 CMD ["/usr/bin/supervisord"]
