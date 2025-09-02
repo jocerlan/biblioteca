@@ -29,13 +29,13 @@ jobs:
             sudo su
             cd /home/admin || exit
             if [ ! -d meu-site ]; then
-              git clone https://github.com/jocerlan/portifolio.git meu-site
+              git clone https://github.com/jocerlan/biblioteca.git meu-site
             fi
             cd meu-site
             git reset --hard
             git pull origin main
-            sudo docker stop site-estatico || true
-            sudo docker rm site-estatico || true
-            sudo docker build -t site-estatico .
-            sudo docker run -d -p 80:80 --name site-estatico site-estatico
+            sudo docker stop site-estatico-samara || true
+            sudo docker rm site-estatico-samara || true
+            sudo docker build -t site-estatico-samara .
+            sudo docker run -d -p 8080:8080 --name site-estatico-samara site-estatico-samara
           "
